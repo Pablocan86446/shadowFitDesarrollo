@@ -1,0 +1,74 @@
+<header><h1>PERFIL ALUMNO</h1></header>
+<main id="usuario_id" data-id="{{usuario._id}}">
+<div class="datos1">
+  <div>
+   
+      {{#if usuario.foto_perfil}}
+      <img class="imagenPerfil" src="/api/users/ver-foto-perfil-alumno/{{usuario._id}}" alt="" >
+      {{else}}
+      <form action="/api/users/cargar-foto-perfil-alumno/{{usuario._id}}" method="post" enctype="multipart/form-data">
+      <label class="inputFoto" for="fotoPerfil">Elegir foto</label>
+      <input class="archivo" style="display:none;" type="file" name="fotoPerfil" placeholder="Elegir foto" id="fotoPerfil">
+      <button class="cargarFoto"type="submit">Guardar</button>
+      </form>
+      {{/if}}
+  </div>
+  <div class="datosEspecificos">
+  <p>Nombre: {{usuario.nombre}}</p>
+  <p>Apellido: {{usuario.apellido}}</p>
+  <p>Correo: {{usuario.email}}</p>
+  <a class="cambiarContrasena" href="/api/views/cambiarcontrasena/{{usuario._id}}">Cambiar contraseña</a>
+    </div>
+  </div>
+  
+</div>
+<div class="profesorYRutinas">
+  <div class="profesor">
+{{#if isProfesor}}
+  <h2>PROFESOR</h2>
+  <div class="datosProfesor">
+    <img src="/api/users/ver-foto-perfil-profesor/{{profesorDesignado._id}}" alt="">
+    <div>
+      <p>Nombre: {{profesorDesignado.nombre}}</p>
+      <p>Apellido: {{profesorDesignado.apellido}}</p>
+      <p>Correo: {{profesorDesignado.email}}</p>
+      <p>Teléfono: {{profesorDesignado.telefono}}</p>
+    </div>
+  </div>
+{{else}}
+  <h2>Selecciona tu profesor</h2>
+  <select name="" id="profesores">
+
+    {{#each profesores}}
+      <option value="{{this._id}}">{{this.nombre}}
+        {{this.apellido}}
+        -
+        {{this.alumnos.length}}
+        alumnos</option>
+    {{/each}}
+
+  </select>
+
+  <form action=""><button id="select_profesor" type="submit">Guardar Profesor</button></form>
+{{/if}}
+</div>
+
+<section class="rutinas">
+  <h2>RUTINAS</h2>
+<ul class="lista">
+{{#each usuario.rutinas}}
+
+{{!-- <li><p>Fecha: {{this.fecha}}</p> <a href="/api/views/createPDF/{{@index}}/{{../usuario._id}}" target="_blank"><span class="material-symbols-outlined"> --}}
+<li><p>Fecha: {{this.fecha}}</p> <a href="/api/views/verrutina/{{this.nombreArchivo}}/{{../usuario._id}}" target="_blank"><span class="material-symbols-outlined">
+picture_as_pdf
+</span> </a></li>
+{{/each}}
+</ul>
+</section>
+</div>
+<form  action="/api/session/logout" method="post"><button class="logout"type="submit">Cerrar
+  
+    cesión</button></form>
+</main>
+<footer>Todos los derechos reservados &copy; Cantarin Pablo</footer>
+<script src="/js/perfilAlumno.js"></script>
